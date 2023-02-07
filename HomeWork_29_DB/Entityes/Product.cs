@@ -8,10 +8,3 @@ public class Product : NamedEntity
    
    
 }
-
-public class Buyer : Person
-{
-    public string Email { get; set; }
-    public virtual ICollection<Product> Products { get; set; }
-    
-}
