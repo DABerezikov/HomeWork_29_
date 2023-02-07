@@ -1,10 +1,12 @@
 ﻿using HomeWork_29_.Services;
 using HomeWork_29_.ViewModels;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Windows;
+using HomeWork_29_.Data;
 
 namespace HomeWork_29_
 {
@@ -19,12 +21,14 @@ namespace HomeWork_29_
 
         private static IHost __Host;
 
-        public static IHost Host => __Host ??= Microsoft.Extensions.Hosting.Host
-            .CreateDefaultBuilder(Environment.GetCommandLineArgs())
+       
+        public static IHost Host => __Host ??= Program
+            .CreateHostBuilder(Environment.GetCommandLineArgs())
             .ConfigureAppConfiguration(cfg => cfg.AddJsonFile("appsettings.json", true, true))
             .ConfigureServices((host, services) => services
                 .AddViews()
                 .AddServices()
+                .AddDatabase(host.Configuration.GetSection("Database"))
             )
             .Build();
 
@@ -43,5 +47,12 @@ namespace HomeWork_29_
             using var host = Host;
             await host.StopAsync();
         }
+
+        internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
+            .AddViews()
+            .AddServices()
+            .AddDatabase(host.Configuration.GetSection("Database"))
+        ;
+        
     }
 }

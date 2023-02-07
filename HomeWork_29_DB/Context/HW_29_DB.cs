@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HomeWork_29_DB.Context
 {
-    internal class HW_29_DB: DbContext
+    public class HW_29_DB: DbContext
     {
         
         public DbSet<Deal> Deals { get; set; }
