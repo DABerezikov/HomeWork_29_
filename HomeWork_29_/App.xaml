@@ -1,0 +1,17 @@
+﻿<Application x:Class="HomeWork_29_.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:l="clr-namespace:HomeWork_29_"
+             xmlns:vm="clr-namespace:HomeWork_29_.ViewModels"
+             StartupUri="Views/Windows/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Infrastructure/Commands/Commands.xaml"/>
+                <ResourceDictionary Source="Resources/Base/Brushes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <vm:ViewModelLocator x:Key="Locator"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
