@@ -30,5 +30,6 @@ public static class DBRegistrator
 
             }
         })
+        .AddTransient<DBInitializer>()
     ;
 }
