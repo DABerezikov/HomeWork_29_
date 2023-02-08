@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeWork29DB.Migrations
 {
     [DbContext(typeof(HW_29_DB))]
-    [Migration("20230207171638_Initial")]
+    [Migration("20230208105900_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -43,6 +43,9 @@ namespace HomeWork29DB.Migrations
 
                     b.Property<string>("Patronymic")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
