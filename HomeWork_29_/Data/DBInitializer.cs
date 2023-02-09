@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using HomeWork_29_.Services;
@@ -22,16 +23,21 @@ public class DBInitializer
 
     public async Task InitialazeAsync()
     {
+        var timer = Stopwatch.StartNew();
+        _Logger.LogInformation("Инициализация БД...");
+        _Logger.LogInformation("Удаление существующей БД...");
         await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+        _Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
         //_db.Database.EnsureCreated();
-       await _db.Database.MigrateAsync();
+        _Logger.LogInformation("Миграция БД...");
+        await _db.Database.MigrateAsync();
+        _Logger.LogInformation("Миграция БД выполнена за {0} мс", timer.ElapsedMilliseconds);
+        if (await _db.Products.AnyAsync()) return;
 
-       if (await _db.Products.AnyAsync()) return;
-
-       await InitializeBuyers();
-       await InitializeProducts();
-       await InitializeDeals();
-
+        await InitializeProducts();
+        await InitializeBuyers();
+        await InitializeDeals();
+        _Logger.LogInformation("Инициализация БД выполнена за {0} c", timer.Elapsed.Seconds);
     }
 
     private const int __ProductCount = 10;
@@ -39,7 +45,8 @@ public class DBInitializer
 
     private async Task InitializeProducts()
     {
-        
+        var timer = Stopwatch.StartNew();
+        _Logger.LogInformation("Инициализация продуктов...");
         _Products = Enumerable.Range(1, __ProductCount)
             .Select(i => new Product
             {
@@ -49,6 +56,7 @@ public class DBInitializer
 
         await _db.Products.AddRangeAsync(_Products);
         await _db.SaveChangesAsync();
+        _Logger.LogInformation("Инициализация продуктов выполнена за {0} мс", timer.ElapsedMilliseconds);
     }
 
     private const int __BuyerCount = 10;
@@ -56,7 +64,8 @@ public class DBInitializer
 
     private async Task InitializeBuyers()
     {
-       
+        var timer = Stopwatch.StartNew();
+        _Logger.LogInformation("Инициализация покупателей...");
         _Buyers = Enumerable.Range(1, __BuyerCount)
             .Select(i => new Buyer
             {
@@ -69,11 +78,14 @@ public class DBInitializer
 
         await _db.Buyer.AddRangeAsync(_Buyers);
         await _db.SaveChangesAsync();
+        _Logger.LogInformation("Инициализация покупателей выполнена за {0} мс", timer.ElapsedMilliseconds);
     }
 
     private const int __DealCount = 1000;
     private async Task InitializeDeals()
     {
+        var timer = Stopwatch.StartNew();
+        _Logger.LogInformation("Инициализация сделок...");
         var rnd = new Random();
        
         var deals = Enumerable.Range(1, __DealCount)
@@ -85,5 +97,6 @@ public class DBInitializer
             });
         await _db.Deals.AddRangeAsync(deals);
         await _db.SaveChangesAsync();
+        _Logger.LogInformation("Инициализация сделок выполнена за {0} мс", timer.ElapsedMilliseconds);
     }
 }
