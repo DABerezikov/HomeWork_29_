@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,7 +93,7 @@ public class DBInitializer
             .Select(i => new Deal
             {
                 
-                Products = { rnd.NextItem(_Products), rnd.NextItem(_Products), rnd.NextItem(_Products), rnd.NextItem(_Products)},
+                Products = new List<Product> { rnd.NextItem(_Products), rnd.NextItem(_Products), rnd.NextItem(_Products), rnd.NextItem(_Products)},
                 Buyer = rnd.NextItem(_Buyers)
             });
         await _db.Deals.AddRangeAsync(deals);
