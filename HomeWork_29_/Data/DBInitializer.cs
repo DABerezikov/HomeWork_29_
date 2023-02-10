@@ -42,20 +42,20 @@ public class DBInitializer
     }
 
     private const int __ProductCount = 10;
-    private Product[] _Products;
+    private Product[] _Product;
 
     private async Task InitializeProducts()
     {
         var timer = Stopwatch.StartNew();
         _Logger.LogInformation("Инициализация продуктов...");
-        _Products = Enumerable.Range(1, __ProductCount)
+        _Product = Enumerable.Range(1, __ProductCount)
             .Select(i => new Product
             {
                 Name = $"Товар {i}",
                 Code = i+10
             }).ToArray();
 
-        await _db.Products.AddRangeAsync(_Products);
+        await _db.Products.AddRangeAsync(_Product);
         await _db.SaveChangesAsync();
         _Logger.LogInformation("Инициализация продуктов выполнена за {0} мс", timer.ElapsedMilliseconds);
     }
@@ -77,7 +77,7 @@ public class DBInitializer
                 Email = $"Клиент-Email{i}@mail.ru"
             }).ToArray();
 
-        await _db.Buyer.AddRangeAsync(_Buyers);
+        await _db.Buyers.AddRangeAsync(_Buyers);
         await _db.SaveChangesAsync();
         _Logger.LogInformation("Инициализация покупателей выполнена за {0} мс", timer.ElapsedMilliseconds);
     }
@@ -93,7 +93,7 @@ public class DBInitializer
             .Select(i => new Deal
             {
                 
-                Products = new List<Product> { rnd.NextItem(_Products), rnd.NextItem(_Products), rnd.NextItem(_Products), rnd.NextItem(_Products)},
+                Product = rnd.NextItem(_Product),
                 Buyer = rnd.NextItem(_Buyers)
             });
         await _db.Deals.AddRangeAsync(deals);

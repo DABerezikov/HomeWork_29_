@@ -1,12 +1,16 @@
-﻿using HomeWork_29_.Services.Interfaces;
+﻿using System.Linq;
+using HomeWork_29_.Services.Interfaces;
 using HomeWork_29_.ViewModels.Base;
+using HomeWork_29_DB.Entityes;
+using HW_29.Interfaces;
 
 namespace HomeWork_29_.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        private readonly IUserDialog _UserDialog;
-        private readonly IDataService _DataService;
+        private readonly IRepository<Product> _productsRepository;
+        private readonly IRepository<Buyer> _buyerRepository;
+        private readonly ISalesService _salesService;
 
         #region Title : string - Заголовок окна
 
@@ -28,10 +32,21 @@ namespace HomeWork_29_.ViewModels
 
         #endregion
 
-        public MainWindowViewModel(IUserDialog UserDialog, IDataService DataService)
+        public MainWindowViewModel(
+            IRepository<Product> ProductsRepository,
+            IRepository<Buyer> BuyerRepository,
+            ISalesService SalesService)
         {
-            _UserDialog = UserDialog;
-            _DataService = DataService;
+            _productsRepository = ProductsRepository;
+            _buyerRepository = BuyerRepository;
+            _salesService = SalesService;
+
+            var deals_count = _salesService.Deals.Count();
+            var product = _productsRepository.Get(5);
+            var buyer = _buyerRepository.Get(7);
+
+            var deal = SalesService.MakeADeal(product.Name, buyer);
+            var deals_count2 = _salesService.Deals.Count();
         }
     }
 }

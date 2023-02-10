@@ -4,6 +4,6 @@ namespace HomeWork_29_DB.Entityes;
 
 public class Deal : Entity
 {
-    public virtual ICollection<Product> Products { get; set; }
+    public virtual Product Product { get; set; }
     public virtual Buyer Buyer { get; set; }
 }

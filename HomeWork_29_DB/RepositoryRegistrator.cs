@@ -2,6 +2,7 @@
 using HW_29.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
+
 namespace HomeWork_29_DB;
 
 public static class RepositoryRegistrator

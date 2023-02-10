@@ -13,7 +13,7 @@ namespace HomeWork_29_DB.Context
         
         public DbSet<Deal> Deals { get; set; }
         public DbSet<Product> Products { get; set; }
-        public  DbSet<Buyer> Buyer { get; set; }
+        public  DbSet<Buyer> Buyers { get; set; }
 
         public HW_29_DB(DbContextOptions<HW_29_DB> options): base(options)
         {
