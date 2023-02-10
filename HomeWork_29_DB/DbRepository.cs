@@ -1,11 +1,12 @@
 ﻿using HomeWork_29_DB.Context;
+using HomeWork_29_DB.Entityes;
 using HomeWork_29_DB.Entityes.Base;
 using HW_29.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeWork_29_DB;
 
-public class DbRepository<T> : IRepository<T> where T : Entity, new()
+internal class DbRepository<T> : IRepository<T> where T : Entity, new()
 {
     private readonly HW_29_DB _db;
     private readonly DbSet<T> _Set;
@@ -76,5 +77,14 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
         _db.Entry(item).State = EntityState.Modified;
         if (AutoSaveChanges)
             await _db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+    }
+
+    class DealsRepository : DbRepository<Deal>
+    {
+        public override IQueryable<Deal> Items => base.Items
+            .Include(item => item.Buyer)
+            .Include(item=>item.Products)
+        ;
+        public DealsRepository(HW_29_DB db) : base(db) { }
     }
 }

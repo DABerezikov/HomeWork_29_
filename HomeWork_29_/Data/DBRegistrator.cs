@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using HomeWork_29_DB;
 using HomeWork_29_DB.Context;
 
 namespace HomeWork_29_.Data;
@@ -31,5 +32,6 @@ public static class DBRegistrator
             }
         })
         .AddTransient<DBInitializer>()
+        .AddRepositoriesInDB()
     ;
 }

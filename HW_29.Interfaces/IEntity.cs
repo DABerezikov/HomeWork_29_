@@ -13,7 +13,7 @@ public interface IRepository<T> where T : class, IEntity, new()
     T Add(T item);
     Task<T> AddAsync(T item, CancellationToken Cancel = default);
     void Update(T item);
-    Task UpdateAsync(T item, CancellationToken Cancel = bad);
+    Task UpdateAsync(T item, CancellationToken Cancel = default);
     void Remove (int id);
     Task RemoveAsync(int id, CancellationToken Cancel = default);
 }
