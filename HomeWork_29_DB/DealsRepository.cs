@@ -8,7 +8,7 @@ class DealsRepository : DbRepository<Deal>
 {
     public override IQueryable<Deal> Items => base.Items
         .Include(item => item.Buyer)
-        .Include(item=>item.Products)
+        .Include(item=>item.Product)
     ;
     public DealsRepository(HW_29_DB db) : base(db) { }
 }

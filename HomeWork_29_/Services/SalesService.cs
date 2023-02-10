@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using HomeWork_29_.Services.Interfaces;
+﻿using HomeWork_29_.Services.Interfaces;
 using HomeWork_29_DB.Entityes;
 using HW_29.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,15 +23,15 @@ public class SalesService : ISalesService
 
     public async Task<Deal> MakeADeal(string productName, Buyer buyer)
     {
-       
-           var product = await _products.Items.FirstOrDefaultAsync(p => p.Name == productName).ConfigureAwait(false);
-        
+
+        var product = await _products.Items.FirstOrDefaultAsync(p => p.Name == productName).ConfigureAwait(false);
+
 
         if (product is null) return null;
         var deal = new Deal
         {
             Buyer = buyer,
-            Products = product
+            Product = product
         };
         return await _deals.AddAsync(deal);
     }
