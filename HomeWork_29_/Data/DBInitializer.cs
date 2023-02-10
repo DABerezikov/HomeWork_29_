@@ -33,7 +33,7 @@ public class DBInitializer
         _Logger.LogInformation("Миграция БД...");
         await _db.Database.MigrateAsync();
         _Logger.LogInformation("Миграция БД выполнена за {0} мс", timer.ElapsedMilliseconds);
-        if (await _db.Products.AnyAsync()) return;
+        if (await _db.Product.AnyAsync()) return;
 
         await InitializeProducts();
         await InitializeBuyers();
@@ -55,7 +55,7 @@ public class DBInitializer
                 Code = i+10
             }).ToArray();
 
-        await _db.Products.AddRangeAsync(_Product);
+        await _db.Product.AddRangeAsync(_Product);
         await _db.SaveChangesAsync();
         _Logger.LogInformation("Инициализация продуктов выполнена за {0} мс", timer.ElapsedMilliseconds);
     }
@@ -73,8 +73,8 @@ public class DBInitializer
                 Name = $"Клиент-Имя {i}",
                 Surname = $"Клиент-Фамилия {i}",
                 Patronymic = $"Клиент-Отчество {i}",
-                Phone = $"Клиент-Телефон {i}",
-                Email = $"Клиент-Email{i}@mail.ru"
+                //Phone = $"Клиент-Телефон {i}",
+                //Email = $"Клиент-Email{i}@mail.ru"
             }).ToArray();
 
         await _db.Buyers.AddRangeAsync(_Buyers);
@@ -93,7 +93,7 @@ public class DBInitializer
             .Select(i => new Deal
             {
                 
-                Products = rnd.NextItem(_Product),
+                Product = rnd.NextItem(_Product),
                 Buyer = rnd.NextItem(_Buyers)
             });
         await _db.Deals.AddRangeAsync(deals);
