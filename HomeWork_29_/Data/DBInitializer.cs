@@ -93,7 +93,7 @@ public class DBInitializer
             .Select(i => new Deal
             {
                 
-                Product = rnd.NextItem(_Product),
+                Products = rnd.NextItem(_Product),
                 Buyer = rnd.NextItem(_Buyers)
             });
         await _db.Deals.AddRangeAsync(deals);
