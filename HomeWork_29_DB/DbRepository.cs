@@ -79,7 +79,9 @@ internal class DbRepository<T> : IRepository<T> where T : Entity, new()
             await _db.SaveChangesAsync(Cancel).ConfigureAwait(false);
     }
 
-    class DealsRepository : DbRepository<Deal>
+   
+} 
+class DealsRepository : DbRepository<Deal>
     {
         public override IQueryable<Deal> Items => base.Items
             .Include(item => item.Buyer)
@@ -87,4 +89,3 @@ internal class DbRepository<T> : IRepository<T> where T : Entity, new()
         ;
         public DealsRepository(HW_29_DB db) : base(db) { }
     }
-}
