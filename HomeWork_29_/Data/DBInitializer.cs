@@ -91,7 +91,7 @@ public class DBInitializer
         var deals = Enumerable.Range(1, __DealCount)
             .Select(i => new Deal
             {
-
+                
                 Product = rnd.NextItem(_Product),
                 Buyer = rnd.NextItem(_Buyers)
             });
