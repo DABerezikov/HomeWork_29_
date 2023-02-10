@@ -1,5 +1,4 @@
 ﻿using HomeWork_29_DB.Context;
-using HomeWork_29_DB.Entityes;
 using HomeWork_29_DB.Entityes.Base;
 using HW_29.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -79,12 +78,5 @@ internal class DbRepository<T> : IRepository<T> where T : Entity, new()
             await _db.SaveChangesAsync(Cancel).ConfigureAwait(false);
     }
 
-    class DealsRepository : DbRepository<Deal>
-    {
-        public override IQueryable<Deal> Items => base.Items
-            .Include(item => item.Buyer)
-            .Include(item=>item.Products)
-        ;
-        public DealsRepository(HW_29_DB db) : base(db) { }
-    }
+   
 }
