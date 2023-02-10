@@ -2,7 +2,6 @@
 using HomeWork_29_DB.Entityes.Base;
 using HW_29.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace HomeWork_29_DB;
 
@@ -15,9 +14,9 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
     {
         _db = db;
         _Set = _db.Set<T>();
-    } 
-    
-    
+    }
+
+
     public virtual IQueryable<T> Items => _Set;
 
     public T Add(T item)
@@ -25,7 +24,7 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
         if (item is null) throw new ArgumentNullException(nameof(item));
         _db.Entry(item).State = EntityState.Added;
         if (AutoSaveChanges)
-            _db.SaveChanges(); 
+            _db.SaveChanges();
         return item;
     }
 
@@ -40,7 +39,7 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
         if (item is null) throw new ArgumentNullException(nameof(item));
         _db.Entry(item).State = EntityState.Added;
         if (AutoSaveChanges)
-           await _db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+            await _db.SaveChangesAsync(Cancel).ConfigureAwait(false);
         return item;
     }
 
@@ -67,11 +66,11 @@ public class DbRepository<T> : IRepository<T> where T : Entity, new()
         _db.Entry(item).State = EntityState.Modified;
         if (AutoSaveChanges)
             _db.SaveChanges();
-       
+
 
     }
 
-    public async Task<T> UpdateAsync(T item, CancellationToken Cancel = default)
+    public async Task UpdateAsync(T item, CancellationToken Cancel = default)
     {
         if (item is null) throw new ArgumentNullException(nameof(item));
         _db.Entry(item).State = EntityState.Modified;
