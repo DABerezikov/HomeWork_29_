@@ -6,6 +6,6 @@ public class Buyer : Person
 {
     public string Email { get; set; }
     public string? Phone { get; set; }
-    public virtual Product? Product { get; set; }
+    
     
 }

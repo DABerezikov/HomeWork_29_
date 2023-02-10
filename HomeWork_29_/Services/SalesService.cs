@@ -31,7 +31,7 @@ public class SalesService : ISalesService
         var deal = new Deal
         {
             Buyer = buyer,
-            Product = product
+            Products = product
         };
         return await _deals.AddAsync(deal);
     }
