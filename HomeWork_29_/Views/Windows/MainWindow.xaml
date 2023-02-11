@@ -17,9 +17,9 @@
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Command="{StaticResource CloseWindowCommand}"/>
             </MenuItem>
-            <MenuItem Header="Покупатели"/>
-            <MenuItem Header="Продукты"/>
-            <MenuItem Header="Статистика"/>
+            <MenuItem Header="Покупатели" Command="{Binding ShowBuyersViewCommand}"/>
+            <MenuItem Header="Продукты" Command="{Binding ShowProductsViewCommand}"/>
+            <MenuItem Header="Статистика" Command="{Binding ShowStatisticsViewCommand}"/>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem DockPanel.Dock="Right">
@@ -28,6 +28,7 @@
             <StatusBarItem Content="{Binding Status}"/>
         </StatusBar>
         <Grid>
+            <ContentControl Content="{Binding CurrentModel}"></ContentControl>
 
         </Grid>
     </DockPanel>
