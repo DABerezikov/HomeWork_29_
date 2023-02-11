@@ -23,9 +23,9 @@ public class SalesService : ISalesService
 
     public async Task<Deal> MakeADeal(string productName, Buyer buyer)
     {
-       
-           var product = await _products.Items.FirstOrDefaultAsync(p => p.Name == productName).ConfigureAwait(false);
-        
+
+        var product = await _products.Items.FirstOrDefaultAsync(p => p.Name == productName).ConfigureAwait(false);
+
 
         if (product is null) return null;
         var deal = new Deal
