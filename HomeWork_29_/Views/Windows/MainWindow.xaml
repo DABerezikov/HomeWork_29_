@@ -17,6 +17,9 @@
             <MenuItem Header="Файл">
                 <MenuItem Header="Выход" Command="{StaticResource CloseWindowCommand}"/>
             </MenuItem>
+            <MenuItem Header="Покупатели"/>
+            <MenuItem Header="Продукты"/>
+            <MenuItem Header="Статистика"/>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem DockPanel.Dock="Right">
