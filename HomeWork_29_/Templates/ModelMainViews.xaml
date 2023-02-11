@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:vm="clr-namespace:HomeWork_29_.ViewModels"
+                    xmlns:view="clr-namespace:HomeWork_29_.Views">
+
+    <DataTemplate DataType="{x:Type system:Int32}">
+        <TextBlock Text="{Binding StringFormat=int:{0}}"/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:ProductsViewModel}">
+        <view:ProductsView DataContext="{Binding}"></view:ProductsView>
+
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:BuyersViewModel}">
+        <view:BuyersView DataContext="{Binding}"></view:BuyersView>
+
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:StatisticsViewModel}">
+        <view:StatisticView DataContext="{Binding}"></view:StatisticView>
+
+    </DataTemplate>
+
+
+
+</ResourceDictionary>
