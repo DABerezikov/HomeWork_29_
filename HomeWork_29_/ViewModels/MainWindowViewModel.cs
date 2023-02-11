@@ -12,6 +12,7 @@ namespace HomeWork_29_.ViewModels
     {
         private readonly IRepository<Product> _productsRepository;
         private readonly IRepository<Buyer> _buyerRepository;
+        private readonly IRepository<Deal> _dealRepository;
         private readonly ISalesService _salesService;
 
         #region Title : string - Заголовок окна
@@ -100,7 +101,7 @@ namespace HomeWork_29_.ViewModels
         /// <summary> Логика выполнения - Отобразить представление статистики </summary>
         private void OnShowStatisticsViewCommandExecuted()
         {
-            CurrentModel = new StatisticsViewModel(_buyerRepository, _productsRepository);
+            CurrentModel = new StatisticsViewModel(_buyerRepository, _productsRepository, _dealRepository);
         }
 
         #endregion
@@ -110,10 +111,12 @@ namespace HomeWork_29_.ViewModels
         public MainWindowViewModel(
             IRepository<Product> ProductsRepository,
             IRepository<Buyer> BuyerRepository,
+            IRepository<Deal> DealRepository,
             ISalesService SalesService)
         {
             _productsRepository = ProductsRepository;
             _buyerRepository = BuyerRepository;
+            _dealRepository = DealRepository;
             _salesService = SalesService;
 
 
