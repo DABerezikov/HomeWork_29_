@@ -72,8 +72,8 @@ public class DBInitializer
                 Name = $"Клиент-Имя {i}",
                 Surname = $"Клиент-Фамилия {i}",
                 Patronymic = $"Клиент-Отчество {i}",
-                //Phone = $"Клиент-Телефон {i}",
-                //Email = $"Клиент-Email{i}@mail.ru"
+                Phone = $"Клиент-Телефон {i}",
+                Email = $"Клиент-Email{i}@mail.ru"
             }).ToArray();
 
         await _db.Buyers.AddRangeAsync(_Buyers);
@@ -91,8 +91,8 @@ public class DBInitializer
         var deals = Enumerable.Range(1, __DealCount)
             .Select(i => new Deal
             {
-                
-                Product = rnd.NextItem(_Product),
+
+                Products = rnd.NextItem(_Product),
                 Buyer = rnd.NextItem(_Buyers)
             });
         await _db.Deals.AddRangeAsync(deals);
