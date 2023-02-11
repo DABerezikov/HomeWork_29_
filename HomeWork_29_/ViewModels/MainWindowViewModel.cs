@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Windows.Input;
 using HomeWork_29_.Services.Interfaces;
-using HomeWork_29_.ViewModels.Base;
 using HomeWork_29_DB.Entityes;
 using HW_29.Interfaces;
+using MathCore.WPF.Commands;
+using MathCore.WPF.ViewModels;
+
 
 namespace HomeWork_29_.ViewModels
 {
@@ -22,6 +24,17 @@ namespace HomeWork_29_.ViewModels
 
         #endregion
 
+        #region CurrentModel : ViewModel - Текущая дочерняя модель-представления
+
+        /// <summary>Текущая дочерняя модель-представления</summary>
+        private ViewModel _CurrentModel;
+
+        /// <summary>Текущая дочерняя модель-представления</summary>
+        public ViewModel CurrentModel { get => _CurrentModel; private set => Set(ref _CurrentModel, value); }
+
+        #endregion
+
+
         #region Status : string - Статус
 
         /// <summary>Статус</summary>
@@ -32,6 +45,68 @@ namespace HomeWork_29_.ViewModels
 
         #endregion
 
+        #region Command ShowProductsViewCommand - Отобразить представление продуктов
+
+        /// <summary> Отобразить представление продуктов </summary>
+        private ICommand _ShowProductsViewCommand;
+
+        /// <summary> Отобразить представление продуктов </summary>
+        public ICommand ShowProductsViewCommand => _ShowProductsViewCommand
+        ??= new LambdaCommand(OnShowProductsViewCommandExecuted, CanShowProductsViewCommandExecute);
+
+        /// <summary> Проверка возможности выполнения - Отобразить представление продуктов </summary>
+        private bool CanShowProductsViewCommandExecute() => true;
+
+        /// <summary> Логика выполнения - Отобразить представление продуктов </summary>
+        private void OnShowProductsViewCommandExecuted()
+        {
+            CurrentModel = new ProductsViewModel(_productsRepository);
+        }
+
+        #endregion
+
+        #region Command ShowBuyersViewCommand - Отобразить представление покупателей
+
+        /// <summary> Отобразить представление покупателей </summary>
+        private ICommand _ShowBuyersViewCommand;
+
+        /// <summary> Отобразить представление покупателей </summary>
+        public ICommand ShowBuyersViewCommand => _ShowBuyersViewCommand
+            ??= new LambdaCommand(OnShowBuyersViewCommandExecuted, CanShowBuyersViewCommandExecute);
+
+        /// <summary> Проверка возможности выполнения - Отобразить представление покупателей </summary>
+        private bool CanShowBuyersViewCommandExecute() => true;
+
+        /// <summary> Логика выполнения - Отобразить представление покупателей </summary>
+        private void OnShowBuyersViewCommandExecuted()
+        {
+            CurrentModel = new BuyersViewModel(_buyerRepository);
+        }
+
+        #endregion
+
+        #region Command ShowStatisticsViewCommand - Отобразить представление статистики
+
+        /// <summary> Отобразить представление статистики </summary>
+        private ICommand _ShowStatisticsViewCommand;
+
+        /// <summary> Отобразить представление статистики </summary>
+        public ICommand ShowStatisticsViewCommand => _ShowStatisticsViewCommand
+            ??= new LambdaCommand(OnShowStatisticsViewCommandExecuted, CanShowStatisticsViewCommandExecute);
+
+        /// <summary> Проверка возможности выполнения - Отобразить представление статистики </summary>
+        private bool CanShowStatisticsViewCommandExecute() => true;
+
+        /// <summary> Логика выполнения - Отобразить представление статистики </summary>
+        private void OnShowStatisticsViewCommandExecuted()
+        {
+            CurrentModel = new StatisticsViewModel(_buyerRepository, _productsRepository);
+        }
+
+        #endregion
+
+
+
         public MainWindowViewModel(
             IRepository<Product> ProductsRepository,
             IRepository<Buyer> BuyerRepository,
@@ -41,12 +116,20 @@ namespace HomeWork_29_.ViewModels
             _buyerRepository = BuyerRepository;
             _salesService = SalesService;
 
-            var deals_count = _salesService.Deals.Count();
-            var product = _productsRepository.Get(5);
-            var buyer = _buyerRepository.Get(7);
 
-            var deal = SalesService.MakeADeal(product.Name, buyer);
-            var deals_count2 = _salesService.Deals.Count();
+
         }
+
+        //private async void Test()
+        //{
+        //    var deals_count = _salesService.Deals.Count();
+        //    var product = await _productsRepository.GetAsync(5);
+        //    var buyer = await  _buyerRepository.GetAsync(7);
+
+        //    var deal = _salesService.MakeADeal(product.Name, buyer);
+        //    var deals_count2 = _salesService.Deals.Count();
+
+
+        //}
     }
 }

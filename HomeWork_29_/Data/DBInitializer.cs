@@ -4,6 +4,7 @@ using HomeWork_29_DB.Entityes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,8 +93,8 @@ public class DBInitializer
             .Select(i => new Deal
             {
 
-                Products = rnd.NextItem(_Product),
-                Buyer = rnd.NextItem(_Buyers)
+                Products = rnd.NextItem((IList<Product>)_Product),
+                Buyer = rnd.NextItem((IList<Buyer>)_Buyers)
             });
         await _db.Deals.AddRangeAsync(deals);
         await _db.SaveChangesAsync();
