@@ -15,6 +15,8 @@ namespace HomeWork_29_
     /// </summary>
     public partial class App : Application
     {
+        public  static bool IsDesignTime { get; set; } = true;
+
         public static Window ActivedWindow => Current.Windows.Cast<Window>().FirstOrDefault(w => w.IsActive);
 
         public static Window FocusedWindow => Current.Windows.Cast<Window>().FirstOrDefault(w => w.IsFocused);
@@ -36,6 +38,8 @@ namespace HomeWork_29_
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            IsDesignTime = false;
+
             var host = Host;
 
             using (var scope = Services.CreateScope())

@@ -15,11 +15,11 @@ namespace HomeWork_29_.ViewModels;
 
 public class StatisticsViewModel:ViewModel
 {
-    private readonly IRepository<Buyer> _buyerRepository;
-    private readonly IRepository<Product> _productsRepository;
-    private readonly IRepository<Deal> _dealsRepository;
+    private readonly IRepository<Buyer> _Buyer;
+    private readonly IRepository<Product> _Product;
+    private readonly IRepository<Deal> _Deals;
 
-    public ObservableCollection<BestSellersInfo> BestSellers { get; } => new ObservableCollection<BestSellersInfo>();
+    public ObservableCollection<BestSellersInfo> BestSellers { get; } = new ();
 
 
     #region Command ComputeStatisticsCommand - Вычислить статистику
@@ -37,25 +37,41 @@ public class StatisticsViewModel:ViewModel
     /// <summary> Логика выполнения - Вычислить статистику </summary>
     private async Task OnComputeStatisticsCommandExecuted()
     {
-      
+        await ComputeDealsStatisticAsync();
 
-        var deals = _dealsRepository.Items;
-        var bestsellers = await deals.GroupBy(deal => deal.Products)
-            .Select(product_deals => new { Product = product_deals.Key, Count = product_deals.Count() })
+        
+    }
+
+    private async Task ComputeDealsStatisticAsync()
+    {
+        
+        var bestsellers_query = _Deals.Items
+            .GroupBy(deal => deal.Products.Id)
+            .Select(deals => new  { ProductID = deals.Key, Count = deals.Count() })
             .OrderByDescending(product => product.Count)
             .Take(5)
-            .ToArrayAsync();
+            .Join(_Product.Items,
+                deal =>deal.ProductID,
+                product=> product.Id,
+                (deal, product) => new BestSellersInfo { Product = product, SellCount = deal.Count});
+         BestSellers.AddClear(await bestsellers_query.ToArrayAsync());
+         
+         //BestSellers.Clear();
+         //foreach (var bestseller in await bestsellers_query.ToArrayAsync())
+        //{
+        //    BestSellers.Add(bestseller);
+        //}
     }
 
     #endregion
 
     public StatisticsViewModel(
-        IRepository<Buyer> buyerRepository,
-        IRepository<Product> productsRepository,
-        IRepository<Deal> dealsRepository)
+        IRepository<Buyer> buyer,
+        IRepository<Product> product,
+        IRepository<Deal> deals)
     {
-        _buyerRepository = buyerRepository;
-        _productsRepository = productsRepository;
-        _dealsRepository = dealsRepository;
+        _Buyer = buyer;
+        _Product = product;
+        _Deals = deals;
     }
 }

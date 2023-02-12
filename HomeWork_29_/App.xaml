@@ -9,7 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Infrastructure/Commands/Commands.xaml"/>
                 <ResourceDictionary Source="Resources/Base/Brushes.xaml"/>
-                <ResourceDictionary Source="Styles/Main.xaml"/>
+                <ResourceDictionary Source="Styles/Main_.xaml"/>
                 <ResourceDictionary Source="Templates/ModelMainViews.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
