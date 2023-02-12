@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HomeWork_29_.Infrastructure.Commands;
+using HomeWork_29_.Models;
 using HomeWork_29_DB.Entityes;
 using HW_29.Interfaces;
 using MathCore.WPF.Commands;
@@ -17,15 +19,8 @@ public class StatisticsViewModel:ViewModel
     private readonly IRepository<Product> _productsRepository;
     private readonly IRepository<Deal> _dealsRepository;
 
-    #region ProductCount : int - Заголовок окна
+    public ObservableCollection<BestSellersInfo> BestSellers { get; } => new ObservableCollection<BestSellersInfo>();
 
-    /// <summary>Заголовок окна</summary>
-    private int _ProductCount;
-
-    /// <summary>Заголовок окна</summary>
-    public int ProductCount { get => _ProductCount; private set => Set(ref _ProductCount, value); }
-
-    #endregion
 
     #region Command ComputeStatisticsCommand - Вычислить статистику
 
@@ -42,7 +37,7 @@ public class StatisticsViewModel:ViewModel
     /// <summary> Логика выполнения - Вычислить статистику </summary>
     private async Task OnComputeStatisticsCommandExecuted()
     {
-        ProductCount = await _productsRepository.Items.CountAsync();
+      
 
         var deals = _dealsRepository.Items;
         var bestsellers = await deals.GroupBy(deal => deal.Products)

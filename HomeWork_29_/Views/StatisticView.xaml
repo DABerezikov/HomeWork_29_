@@ -21,16 +21,6 @@
 
                 </TextBlock.Effect>
             </TextBlock>
-            <TextBlock HorizontalAlignment="Center" Margin="0, 10">
-                Число товаров <TextBlock Text="{Binding ProductCount}"/> штук
-            </TextBlock>
-            <TextBlock HorizontalAlignment="Center" Margin="0, 10">
-                Число товаров <Run Text="{Binding ProductCount, Mode=OneWay}" Foreground="Red">
-                    <Run.TextDecorations>
-                        <TextDecoration/>
-                    </Run.TextDecorations>
-                </Run>
-            штук </TextBlock>
         </StackPanel>
 
     </Grid>
