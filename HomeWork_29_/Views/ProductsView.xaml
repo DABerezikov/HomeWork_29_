@@ -23,13 +23,16 @@
                     </CollectionViewSource.SortDescriptions>
                 </CollectionViewSource>
             </GroupBox.Resources>-->
-            <ListBox MinWidth="140" ItemsSource="{Binding Products}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}"></TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <DockPanel>
+                <TextBox DockPanel.Dock="Top" Text="{Binding ProductFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                <ListBox MinWidth="140" ItemsSource="{Binding ProductView}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
         </GroupBox>
     </Grid>
 </UserControl>
