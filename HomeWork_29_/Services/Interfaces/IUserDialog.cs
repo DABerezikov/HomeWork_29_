@@ -1,10 +1,12 @@
-﻿using System;
+﻿using HomeWork_29_DB.Entityes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HomeWork_29_.Services.Interfaces
 {
-    internal interface IUserDialog
+    public interface IUserDialog
     {
+        bool Edit(Product product);
     }
 }

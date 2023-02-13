@@ -14,6 +14,7 @@ namespace HomeWork_29_.ViewModels
         private readonly IRepository<Buyer> _buyerRepository;
         private readonly IRepository<Deal> _dealRepository;
         private readonly ISalesService _salesService;
+        private readonly IUserDialog _userDialog;
 
         #region Title : string - Заголовок окна
 
@@ -61,7 +62,7 @@ namespace HomeWork_29_.ViewModels
         /// <summary> Логика выполнения - Отобразить представление продуктов </summary>
         private void OnShowProductsViewCommandExecuted()
         {
-            CurrentModel = new ProductsViewModel(_productsRepository);
+            CurrentModel = new ProductsViewModel(_productsRepository, _userDialog);
         }
 
         #endregion
@@ -112,15 +113,14 @@ namespace HomeWork_29_.ViewModels
             IRepository<Product> ProductsRepository,
             IRepository<Buyer> BuyerRepository,
             IRepository<Deal> DealRepository,
-            ISalesService SalesService)
+            ISalesService SalesService,
+            IUserDialog UserDialog)
         {
             _productsRepository = ProductsRepository;
             _buyerRepository = BuyerRepository;
             _dealRepository = DealRepository;
             _salesService = SalesService;
-
-
-
+            _userDialog = UserDialog;
         }
 
         //private async void Test()

@@ -31,13 +31,21 @@
             </GroupBox.Resources>-->
             <DockPanel>
                 <TextBox DockPanel.Dock="Top" Text="{Binding ProductFilter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                <ListBox MinWidth="140" ItemsSource="{Binding ProductView}">
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="3">
+                    <Button Content="Add" Margin="3" Command="{Binding AddNewProductCommand}"/>
+                    <Button Content="Remove" Margin="3" 
+                            Command="{Binding RemoveProductCommand}"
+                            CommandParameter="{Binding SelectedProduct}"/>
+                </UniformGrid>
+                <ListBox MinWidth="140" ItemsSource="{Binding ProductView}"
+                         SelectedItem="{Binding SelectedProduct}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}"></TextBlock>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+
             </DockPanel>
         </GroupBox>
     </Grid>
