@@ -118,6 +118,14 @@ public class ProductsViewModel : ViewModel
     private void OnRemoveProductCommandExecuted(Product p)
     {
         var product_to_remove = p ?? SelectedProduct;
+
+        if (!_UserDialog.ConfirmInformation($"Вы хотите удалить продукт {product_to_remove.Name}?", "Удаление продукта"))
+            return;
+
+        _Product.Remove(product_to_remove.Id);
+        Products.Remove(product_to_remove);
+        if (ReferenceEquals(SelectedProduct, product_to_remove))
+            SelectedProduct = null;
     }
 
     #endregion

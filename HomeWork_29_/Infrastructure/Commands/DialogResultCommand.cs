@@ -10,7 +10,7 @@ public class DialogResultCommand : ICommand
 
    public  bool? DialogResult { get; set; }
 
-    public bool CanExecute(object parameter) => App.ActiveWindow != null;
+    public bool CanExecute(object parameter) => App.CurrentWindow != null;
 
     public void Execute(object parameter)
     {
@@ -20,7 +20,7 @@ public class DialogResultCommand : ICommand
 
         var  dialog_result = DialogResult;
         if (parameter!=null)
-        dialog_result = Convert.ToBoolean(parameter);
+            dialog_result = Convert.ToBoolean(parameter);
         window.DialogResult = dialog_result;
         window.Close();
     }

@@ -8,5 +8,9 @@ namespace HomeWork_29_.Services.Interfaces
     public interface IUserDialog
     {
         bool Edit(Product product);
+
+        bool ConfirmInformation(string Information, string Caption);
+        bool ConfirmWarning(string Warning, string Caption);
+        bool ConfirmError(string Error, string Caption);
     }
 }

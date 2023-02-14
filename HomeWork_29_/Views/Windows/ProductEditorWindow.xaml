@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         xmlns:vm="clr-namespace:HomeWork_29_.ViewModels"
         Title="ProductEditorWindow"
-        MinHeight="140"
-        Width="380" Height="140"
+        MinHeight="160"
+        Width="380" Height="160"
         d:DataContext="{d:DesignInstance vm:ProductEditorViewModel, IsDesignTimeCreatable = True}">
 
     <DockPanel Margin="3">
@@ -17,8 +17,10 @@
         <UniformGrid Rows="1" DockPanel.Dock="Bottom" Margin="5" HorizontalAlignment="Right">
             <Button Content="Ok" Margin="3" Padding="20,3" FontWeight="Bold" IsDefault="True"
                     Command="{StaticResource DialogResultCommand}"
-                    CommandParameter="{StaticResource DialogResultCommand}"/>
-            <Button Content="Cancel" Margin="3" Padding="20,3" IsCancel="True"/>
+                    CommandParameter="True"/>
+            <Button Content="Cancel" Margin="3" Padding="20,3" IsCancel="True"
+                    Command="{StaticResource DialogResultCommand}"
+                    CommandParameter="False"/>
         </UniformGrid>
         <Grid Margin="5">
             <Grid.ColumnDefinitions>

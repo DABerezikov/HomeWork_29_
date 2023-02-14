@@ -26,19 +26,19 @@ public class DBInitializer
     {
         var timer = Stopwatch.StartNew();
         _Logger.LogInformation("Инициализация БД...");
-        _Logger.LogInformation("Удаление существующей БД...");
-        await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
-        _Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
+        //_Logger.LogInformation("Удаление существующей БД...");
+        //await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+        //_Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
         //_db.Database.EnsureCreated();
         _Logger.LogInformation("Миграция БД...");
-        await _db.Database.MigrateAsync();
+        await _db.Database.MigrateAsync().ConfigureAwait(false);
         _Logger.LogInformation("Миграция БД выполнена за {0} мс", timer.ElapsedMilliseconds);
         if (await _db.Products.AnyAsync()) return;
 
         await InitializeProducts();
         await InitializeBuyers();
         await InitializeDeals();
-        _Logger.LogInformation("Инициализация БД выполнена за {0} c", timer.Elapsed.Seconds);
+        //_Logger.LogInformation("Инициализация БД выполнена за {0} c", timer.Elapsed.Seconds);
     }
 
     private const int __ProductCount = 10;
