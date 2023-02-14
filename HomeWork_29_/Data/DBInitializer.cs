@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using HomeWork_29_.Services;
+﻿using HomeWork_29_.Services;
 using HomeWork_29_DB.Context;
 using HomeWork_29_DB.Entityes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HomeWork_29_.Data;
 
@@ -16,7 +16,7 @@ public class DBInitializer
     private readonly HW_29_DB _db;
     private readonly ILogger<DBInitializer> _Logger;
 
-    public DBInitializer(HW_29_DB db, ILogger <DBInitializer> logger)
+    public DBInitializer(HW_29_DB db, ILogger<DBInitializer> logger)
     {
         _db = db;
         _Logger = logger;
@@ -26,36 +26,36 @@ public class DBInitializer
     {
         var timer = Stopwatch.StartNew();
         _Logger.LogInformation("Инициализация БД...");
-        _Logger.LogInformation("Удаление существующей БД...");
-        await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
-        _Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
+        //_Logger.LogInformation("Удаление существующей БД...");
+        //await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+        //_Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
         //_db.Database.EnsureCreated();
         _Logger.LogInformation("Миграция БД...");
-        await _db.Database.MigrateAsync();
+        await _db.Database.MigrateAsync().ConfigureAwait(false);
         _Logger.LogInformation("Миграция БД выполнена за {0} мс", timer.ElapsedMilliseconds);
         if (await _db.Products.AnyAsync()) return;
 
         await InitializeProducts();
         await InitializeBuyers();
         await InitializeDeals();
-        _Logger.LogInformation("Инициализация БД выполнена за {0} c", timer.Elapsed.Seconds);
+        //_Logger.LogInformation("Инициализация БД выполнена за {0} c", timer.Elapsed.Seconds);
     }
 
     private const int __ProductCount = 10;
-    private Product[] _Products;
+    private Product[] _Product;
 
     private async Task InitializeProducts()
     {
         var timer = Stopwatch.StartNew();
         _Logger.LogInformation("Инициализация продуктов...");
-        _Products = Enumerable.Range(1, __ProductCount)
+        _Product = Enumerable.Range(1, __ProductCount)
             .Select(i => new Product
             {
                 Name = $"Товар {i}",
-                Code = i+10
+                Code = i + 10
             }).ToArray();
 
-        await _db.Products.AddRangeAsync(_Products);
+        await _db.Products.AddRangeAsync(_Product);
         await _db.SaveChangesAsync();
         _Logger.LogInformation("Инициализация продуктов выполнена за {0} мс", timer.ElapsedMilliseconds);
     }
@@ -77,7 +77,7 @@ public class DBInitializer
                 Email = $"Клиент-Email{i}@mail.ru"
             }).ToArray();
 
-        await _db.Buyer.AddRangeAsync(_Buyers);
+        await _db.Buyers.AddRangeAsync(_Buyers);
         await _db.SaveChangesAsync();
         _Logger.LogInformation("Инициализация покупателей выполнена за {0} мс", timer.ElapsedMilliseconds);
     }
@@ -88,13 +88,13 @@ public class DBInitializer
         var timer = Stopwatch.StartNew();
         _Logger.LogInformation("Инициализация сделок...");
         var rnd = new Random();
-       
+
         var deals = Enumerable.Range(1, __DealCount)
             .Select(i => new Deal
             {
-                
-                Products = new List<Product> { rnd.NextItem(_Products), rnd.NextItem(_Products), rnd.NextItem(_Products), rnd.NextItem(_Products)},
-                Buyer = rnd.NextItem(_Buyers)
+
+                Products = rnd.NextItem((IList<Product>)_Product),
+                Buyer = rnd.NextItem((IList<Buyer>)_Buyers)
             });
         await _db.Deals.AddRangeAsync(deals);
         await _db.SaveChangesAsync();

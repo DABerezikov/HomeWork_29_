@@ -11,7 +11,7 @@ namespace HomeWork29DB.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Buyer",
+                name: "Buyers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -24,26 +24,7 @@ namespace HomeWork29DB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Buyer", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Deals",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BuyerId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Deals", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Deals_Buyer_BuyerId",
-                        column: x => x.BuyerId,
-                        principalTable: "Buyer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Buyers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,23 +34,37 @@ namespace HomeWork29DB.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<int>(type: "int", nullable: false),
-                    BuyerId = table.Column<int>(type: "int", nullable: true),
-                    DealId = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Deals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductsId = table.Column<int>(type: "int", nullable: false),
+                    BuyerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Deals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Buyer_BuyerId",
+                        name: "FK_Deals_Buyers_BuyerId",
                         column: x => x.BuyerId,
-                        principalTable: "Buyer",
-                        principalColumn: "Id");
+                        principalTable: "Buyers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_Deals_DealId",
-                        column: x => x.DealId,
-                        principalTable: "Deals",
-                        principalColumn: "Id");
+                        name: "FK_Deals_Products_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -78,27 +73,22 @@ namespace HomeWork29DB.Migrations
                 column: "BuyerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_BuyerId",
-                table: "Products",
-                column: "BuyerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_DealId",
-                table: "Products",
-                column: "DealId");
+                name: "IX_Deals_ProductsId",
+                table: "Deals",
+                column: "ProductsId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
                 name: "Deals");
 
             migrationBuilder.DropTable(
-                name: "Buyer");
+                name: "Buyers");
+
+            migrationBuilder.DropTable(
+                name: "Products");
         }
     }
 }
